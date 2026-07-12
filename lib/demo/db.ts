@@ -7,7 +7,8 @@ import type { CardCompany, Category, ExpenseType, PaymentMethod, TransactionSour
 
 export const DEMO_USER_ID = "demo-user";
 const STORAGE_KEY = "kakeibo-demo-db";
-const DB_VERSION = 1;
+// 2: シードの店名を実在企業と無関係な一般名称（コンビニA等）へ変更
+const DB_VERSION = 2;
 
 export type DemoTransactionRow = {
   id: string;
@@ -87,8 +88,8 @@ const PAYMENT_METHOD_SEED: [code: string, name: string, color: string, sortOrder
 // 毎月同じ日に発生する支出（サブスク・経常消費）
 type FixedSeedItem = { day: number; merchant: string; category: string; pm: string; type: ExpenseType; amount: number };
 const FIXED_ITEMS: FixedSeedItem[] = [
-  { day: 1, merchant: "Netflix", category: "サブスク", pm: "credit_card", type: "subscription", amount: 1490 },
-  { day: 5, merchant: "Spotify", category: "サブスク", pm: "credit_card", type: "subscription", amount: 980 },
+  { day: 1, merchant: "動画配信サービスA", category: "サブスク", pm: "credit_card", type: "subscription", amount: 1490 },
+  { day: 5, merchant: "音楽配信サービスA", category: "サブスク", pm: "credit_card", type: "subscription", amount: 980 },
   { day: 10, merchant: "ジム月会費", category: "娯楽", pm: "credit_card", type: "subscription", amount: 7678 },
   { day: 2, merchant: "通勤定期券（1か月）", category: "交通費", pm: "credit_card", type: "recurring", amount: 8800 },
   { day: 20, merchant: "携帯電話料金", category: "デジタル購入", pm: "credit_card", type: "recurring", amount: 3278 },
@@ -101,20 +102,20 @@ type VariableSeedItem = {
   min: number; max: number; minCount: number; maxCount: number;
 };
 const VARIABLE_ITEMS: VariableSeedItem[] = [
-  { merchant: "セブン-イレブン", category: "食費（仕事中）", pm: "paypay", type: "daily", min: 380, max: 880, minCount: 6, maxCount: 9 },
-  { merchant: "ローソン", category: "食費（仕事中）", pm: "paypay", type: "daily", min: 320, max: 780, minCount: 3, maxCount: 5 },
-  { merchant: "まいばすけっと", category: "日用品", pm: "credit_card", type: "daily", min: 900, max: 2400, minCount: 4, maxCount: 6 },
-  { merchant: "マツモトキヨシ", category: "日用品", pm: "paypay", type: "daily", min: 700, max: 1900, minCount: 1, maxCount: 2 },
-  { merchant: "サイゼリヤ", category: "外食", pm: "cash", type: "daily", min: 1000, max: 1800, minCount: 1, maxCount: 2 },
-  { merchant: "マクドナルド", category: "外食", pm: "paypay", type: "daily", min: 590, max: 1080, minCount: 1, maxCount: 3 },
-  { merchant: "スターバックス", category: "外食", pm: "credit_card", type: "daily", min: 550, max: 750, minCount: 2, maxCount: 3 },
-  { merchant: "すき家", category: "外食", pm: "paypay", type: "daily", min: 480, max: 980, minCount: 1, maxCount: 2 },
-  { merchant: "居酒屋 花くら", category: "飲み", pm: "cash", type: "daily", min: 3200, max: 5800, minCount: 1, maxCount: 2 },
+  { merchant: "コンビニA", category: "食費（仕事中）", pm: "paypay", type: "daily", min: 380, max: 880, minCount: 6, maxCount: 9 },
+  { merchant: "コンビニB", category: "食費（仕事中）", pm: "paypay", type: "daily", min: 320, max: 780, minCount: 3, maxCount: 5 },
+  { merchant: "スーパーA", category: "日用品", pm: "credit_card", type: "daily", min: 900, max: 2400, minCount: 4, maxCount: 6 },
+  { merchant: "ドラッグストアA", category: "日用品", pm: "paypay", type: "daily", min: 700, max: 1900, minCount: 1, maxCount: 2 },
+  { merchant: "レストランA", category: "外食", pm: "cash", type: "daily", min: 1000, max: 1800, minCount: 1, maxCount: 2 },
+  { merchant: "ファストフードA", category: "外食", pm: "paypay", type: "daily", min: 590, max: 1080, minCount: 1, maxCount: 3 },
+  { merchant: "カフェA", category: "外食", pm: "credit_card", type: "daily", min: 550, max: 750, minCount: 2, maxCount: 3 },
+  { merchant: "ファストフードB", category: "外食", pm: "paypay", type: "daily", min: 480, max: 980, minCount: 1, maxCount: 2 },
+  { merchant: "居酒屋A", category: "飲み", pm: "cash", type: "daily", min: 3200, max: 5800, minCount: 1, maxCount: 2 },
   { merchant: "友人と飲み会", category: "飲み", pm: "paypay", type: "daily", min: 4000, max: 6000, minCount: 0, maxCount: 1 },
-  { merchant: "モバイルSuicaチャージ", category: "交通費", pm: "credit_card", type: "daily", min: 3000, max: 3000, minCount: 2, maxCount: 3 },
-  { merchant: "TOHOシネマズ", category: "娯楽", pm: "credit_card", type: "daily", min: 2000, max: 2000, minCount: 0, maxCount: 1 },
-  { merchant: "Steam", category: "デジタル購入", pm: "credit_card", type: "daily", min: 1480, max: 2980, minCount: 0, maxCount: 1 },
-  { merchant: "ユニクロ", category: "衣服", pm: "credit_card", type: "daily", min: 2990, max: 6990, minCount: 0, maxCount: 1 },
+  { merchant: "交通系ICカードチャージ", category: "交通費", pm: "credit_card", type: "daily", min: 3000, max: 3000, minCount: 2, maxCount: 3 },
+  { merchant: "映画館A", category: "娯楽", pm: "credit_card", type: "daily", min: 2000, max: 2000, minCount: 0, maxCount: 1 },
+  { merchant: "ゲーム配信ストアA", category: "デジタル購入", pm: "credit_card", type: "daily", min: 1480, max: 2980, minCount: 0, maxCount: 1 },
+  { merchant: "衣料品店A", category: "衣服", pm: "credit_card", type: "daily", min: 2990, max: 6990, minCount: 0, maxCount: 1 },
   { merchant: "内科クリニック", category: "医療", pm: "cash", type: "necessary", min: 1450, max: 2300, minCount: 0, maxCount: 1 },
   { merchant: "処方箋薬局", category: "医療", pm: "cash", type: "necessary", min: 680, max: 1400, minCount: 0, maxCount: 1 },
   { merchant: "友人へのプレゼント", category: "交際費", pm: "credit_card", type: "daily", min: 2500, max: 4500, minCount: 0, maxCount: 1 },
@@ -123,8 +124,8 @@ const VARIABLE_ITEMS: VariableSeedItem[] = [
 
 // 未分類カテゴリのまま残っている取込例（当月のみ）。未分類画面のデモに使う
 const UNCLASSIFIED_ITEMS: { merchant: string; amount: number }[] = [
-  { merchant: "Amazon.co.jp", amount: 2480 },
-  { merchant: "楽天市場", amount: 1980 },
+  { merchant: "通販サイトA", amount: 2480 },
+  { merchant: "通販サイトB", amount: 1980 },
 ];
 
 // 固定シードの擬似乱数（月ごとに同じ並びを再現する）
