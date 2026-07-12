@@ -1,0 +1,710 @@
+@import "tailwindcss";
+
+:root {
+  --background: #efeee8;
+  --surface: #fffdf8;
+  --foreground: #17221e;
+  --muted: #707873;
+  --line: #dedfd8;
+  --brand: #315c4b;
+  --brand-deep: #1c3329;
+  --brand-soft: #e5eee8;
+  --accent: #a77e45;
+  --warning: #a96d18;
+  --warning-soft: #faf0d8;
+  --danger: #a94c49;
+  --danger-soft: #faecea;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 10px 28px rgba(28, 42, 35, 0.07),
+    0 2px 7px rgba(28, 42, 35, 0.035);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #dadcd7;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 15% -10%, rgba(167, 126, 69, 0.15), transparent 28rem),
+    radial-gradient(circle at 100% 16%, rgba(49, 92, 75, 0.07), transparent 24rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI",
+    "Yu Gothic", sans-serif;
+  font-feature-settings: "palt", "kern";
+  letter-spacing: -0.01em;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+.app-shell {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0 auto;
+  /* hiddenだと子孫のposition:stickyが無効になるため、スクロールコンテナを作らないclipを使う */
+  overflow-x: clip;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.36), transparent 24rem),
+    transparent;
+}
+
+@media (min-width: 540px) {
+  .app-shell {
+    max-width: 480px;
+    border-right: 1px solid rgba(255, 255, 255, 0.55);
+    border-left: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 70px rgba(27, 40, 34, 0.13);
+  }
+}
+
+.page-content {
+  --page-top-padding: max(10px, env(safe-area-inset-top));
+  min-height: 100dvh;
+  padding: var(--page-top-padding) 10px
+    calc(76px + env(safe-area-inset-bottom));
+}
+
+/* ページ上部に固定するブロック。静止時はページの上余白と同じ位置にタイトルが来るよう
+   上余白ぶんを負マージンで打ち消し、固定時はステータスバー（セーフエリア）を避ける。 */
+.sticky-top-shell {
+  position: sticky;
+  top: 0;
+  margin-top: calc(var(--page-top-padding) * -1);
+  padding-top: var(--page-top-padding);
+}
+
+.page-header {
+  padding-left: 12px;
+}
+
+.page-header::before {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #c6a36e, #7f5b2f);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.42);
+  content: "";
+}
+
+.page-title {
+  color: #14221c;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.page-description {
+  letter-spacing: 0.005em;
+}
+
+.surface-card {
+  border: 1px solid rgba(205, 205, 197, 0.92);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(250, 249, 245, 0.94));
+  box-shadow: var(--shadow);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.015em;
+}
+
+.section-heading::before {
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  content: "";
+}
+
+.month-picker {
+  border-color: rgba(167, 126, 69, 0.22);
+  background: linear-gradient(120deg, #fffdf8, #f6f2e8);
+}
+
+.icon-button {
+  border: 1px solid rgba(205, 205, 197, 0.9);
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--brand);
+  box-shadow: 0 3px 9px rgba(27, 42, 35, 0.055), 0 1px 0 #fff inset;
+}
+
+.report-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    radial-gradient(circle at 88% -20%, rgba(185, 151, 99, 0.25), transparent 46%),
+    linear-gradient(145deg, #2a4036, #172820 74%);
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(23, 41, 33, 0.19), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+.report-hero::before {
+  position: absolute;
+  top: 0;
+  right: 18px;
+  left: 18px;
+  height: 2px;
+  border-radius: 0 0 999px 999px;
+  background: linear-gradient(90deg, transparent, #d0aa70 30%, #efd5a8 50%, #d0aa70 70%, transparent);
+  content: "";
+}
+
+.breakdown-card > summary {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.breakdown-card[open] > summary {
+  color: var(--brand-deep);
+}
+
+.breakdown-row {
+  position: relative;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.breakdown-row::before {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 0;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--row-color);
+  opacity: 0;
+  content: "";
+  transition: opacity 140ms ease;
+}
+
+.breakdown-row:active::before {
+  opacity: 1;
+}
+
+.progress-track {
+  box-shadow: 0 1px 2px rgba(23, 35, 29, 0.05) inset;
+}
+
+.chart-card {
+  border-color: rgba(167, 126, 69, 0.2);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(250, 248, 242, 0.96)),
+    var(--surface);
+}
+
+.form-card {
+  border-top: 3px solid rgba(167, 126, 69, 0.7);
+  background: linear-gradient(165deg, #fffefa, #fbfaf5 62%);
+}
+
+.amount-field-shell {
+  overflow: hidden;
+  border: 1px solid rgba(167, 126, 69, 0.28);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f8f3e8, #fffefb);
+  box-shadow: 0 1px 0 #fff inset, 0 5px 16px rgba(43, 44, 34, 0.05);
+}
+
+.amount-field-shell .field {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.form-card button[aria-pressed],
+.candidate-card button[aria-pressed] {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+  color: #59635e;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.form-card button[aria-pressed="true"],
+.candidate-card button[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: linear-gradient(135deg, #3c6a56, #294c3d);
+  color: white;
+  box-shadow: 0 6px 14px rgba(40, 76, 61, 0.18), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.form-card label:has(input[type="checkbox"]) {
+  border-color: rgba(206, 207, 199, 0.92);
+  background: rgba(255, 255, 255, 0.52);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.78) inset;
+}
+
+.candidate-card {
+  position: relative;
+  border-top: 3px solid rgba(49, 92, 75, 0.65);
+  background: linear-gradient(165deg, #fffefa, #faf9f4);
+}
+
+.candidate-card::after {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  width: 46px;
+  height: 2px;
+  background: var(--accent);
+  content: "";
+}
+
+.hero-nav-button {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+  backdrop-filter: blur(8px);
+}
+
+.sync-button {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: linear-gradient(180deg, #fffefb, #f5f2ea);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.14), 0 1px 0 #fff inset;
+}
+
+@keyframes skeleton-shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+.loading-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-card::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.54), transparent);
+  animation: skeleton-shimmer 1.25s infinite;
+  content: "";
+}
+
+.empty-state {
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.transaction-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0.98), rgba(249, 248, 243, 0.94));
+}
+
+.transaction-card::after {
+  position: absolute;
+  top: -32px;
+  right: -32px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(49, 92, 75, 0.035);
+  content: "";
+}
+
+.transaction-card:active {
+  border-color: rgba(49, 92, 75, 0.24);
+  box-shadow: 0 5px 14px rgba(28, 42, 35, 0.07);
+}
+
+.transaction-chevron {
+  border: 1px solid rgba(210, 212, 205, 0.8);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.calendar-card {
+  border-color: rgba(167, 126, 69, 0.18);
+}
+
+.calendar-day {
+  border: 1px solid transparent;
+}
+
+.calendar-day:not(.calendar-day-filled):active {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.auth-card {
+  border-top: 3px solid rgba(167, 126, 69, 0.72);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(167, 126, 69, 0.1), transparent 13rem),
+    linear-gradient(160deg, #fffefb, #f9f7f0);
+}
+
+.stat-tile {
+  border: 1px solid rgba(49, 92, 75, 0.08);
+  background: linear-gradient(145deg, #edf3ef, #e2ece6);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) inset;
+}
+
+.hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(124, 164, 143, 0.28), transparent 44%),
+    radial-gradient(circle at 55% 125%, rgba(184, 141, 77, 0.19), transparent 42%),
+    linear-gradient(145deg, #263e33, #14251e 72%);
+  box-shadow: 0 20px 42px rgba(22, 42, 33, 0.23), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.hero-card::before {
+  position: absolute;
+  top: 0;
+  right: 22px;
+  left: 22px;
+  z-index: 2;
+  height: 2px;
+  border-radius: 0 0 999px 999px;
+  background: linear-gradient(90deg, transparent, #d4b17a 28%, #f0d39f 50%, #d4b17a 72%, transparent);
+  content: "";
+}
+
+.hero-caption {
+  letter-spacing: 0.035em;
+}
+
+.hero-total {
+  color: #fffdf6;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+}
+
+.hero-count {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  backdrop-filter: blur(8px);
+}
+
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  border-top-color: color-mix(in srgb, var(--metric-color) 58%, #d5d5cd);
+  box-shadow: 0 10px 25px rgba(28, 42, 35, 0.07), 0 1px 0 white inset;
+}
+
+.metric-card::before {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  left: 14px;
+  height: 3px;
+  border-radius: 0 0 999px 999px;
+  background: var(--metric-color);
+  content: "";
+}
+
+.metric-card::after {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--metric-color) 9%, transparent);
+  content: "";
+}
+
+.metric-dot {
+  background: var(--metric-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--metric-color) 12%, transparent);
+}
+
+.metric-arrow {
+  border: 1px solid rgba(214, 214, 205, 0.8);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.metric-amount {
+  color: #17261f;
+}
+
+.notice-card {
+  border: 1px solid rgba(203, 170, 105, 0.52);
+  border-left: 4px solid #bd812b;
+  background: linear-gradient(105deg, #fffaf0, #fffdf8);
+  box-shadow: 0 8px 24px rgba(80, 58, 24, 0.06), 0 1px 0 white inset;
+}
+
+.account-orb {
+  border: 1px solid rgba(167, 126, 69, 0.32);
+  background: linear-gradient(145deg, #fffdf7, #ebe7dc);
+  box-shadow: 0 5px 14px rgba(27, 42, 35, 0.09), 0 1px 0 white inset;
+}
+
+.nav-dock {
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  background: rgba(255, 253, 248, 0.91);
+  box-shadow: 0 14px 38px rgba(20, 35, 28, 0.18), 0 1px 0 #fff inset;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item-active::before {
+  position: absolute;
+  top: 4px;
+  width: 20px;
+  height: 2px;
+  border-radius: 999px;
+  background: #dfbd83;
+  content: "";
+}
+
+.field {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--foreground);
+  padding: 10px 12px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field:focus {
+  border-color: #769884;
+  box-shadow: 0 0 0 3px rgba(49, 92, 75, 0.1), 0 1px 0 white inset;
+}
+
+/* iOS Safariのdate/time入力は固有の最小幅を持ちグリッド列からはみ出すため、
+   外観をリセットして列幅どおりに縮められるようにする */
+input[type="date"].field,
+input[type="time"].field,
+input[type="datetime-local"].field {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+}
+
+input[type="date"].field::-webkit-date-and-time-value,
+input[type="time"].field::-webkit-date-and-time-value,
+input[type="datetime-local"].field::-webkit-date-and-time-value {
+  margin: 0;
+  text-align: left;
+}
+
+select.field {
+  background-image:
+    linear-gradient(45deg, transparent 50%, #7d8982 50%),
+    linear-gradient(135deg, #7d8982 50%, transparent 50%);
+  background-position: calc(100% - 14px) calc(50% - 2px), calc(100% - 10px) calc(50% - 2px);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+  padding-right: 25px;
+}
+
+.field-label {
+  display: block;
+  margin: 0 0 5px 2px;
+  color: #505c56;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  padding: 0 18px;
+  font-weight: 850;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.primary-button:active,
+.secondary-button:active,
+.danger-button:active {
+  transform: scale(0.98);
+}
+
+.primary-button {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, #29493b, var(--brand-deep));
+  color: white;
+  box-shadow: 0 11px 24px rgba(26, 48, 39, 0.2), 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  letter-spacing: 0.025em;
+}
+
+.secondary-button {
+  border: 1px solid #d8dad3;
+  background: linear-gradient(180deg, #fff, #f7f6f1);
+  color: var(--brand-deep);
+  box-shadow: 0 3px 10px rgba(28, 42, 35, 0.05);
+}
+
+.danger-button {
+  border: 1px solid #f0cdca;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+@keyframes status-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-message {
+  animation: status-in 180ms ease-out;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #101814;
+    --surface: #19241f;
+    --foreground: #edf3ef;
+    --muted: #a2ada7;
+    --line: #344039;
+    --brand-soft: #22382d;
+    --warning-soft: #3b311c;
+    --danger-soft: #3b2525;
+    --accent: #c29a61;
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.035) inset, 0 14px 34px rgba(0, 0, 0, 0.2);
+  }
+
+  html {
+    background: #09100d;
+  }
+
+  .field {
+    background: #17211d;
+    color: var(--foreground);
+  }
+
+  .surface-card {
+    border-color: rgba(69, 82, 74, 0.76);
+    background: linear-gradient(145deg, #1c2822, #17211d);
+  }
+
+  .icon-button,
+  .transaction-chevron {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .stat-tile {
+    background: #21342a;
+  }
+
+  .month-picker,
+  .chart-card,
+  .form-card,
+  .auth-card,
+  .transaction-card,
+  .candidate-card {
+    background: linear-gradient(145deg, #1c2822, #17211d);
+  }
+
+  .form-card button[aria-pressed],
+  .candidate-card button[aria-pressed],
+  .form-card label:has(input[type="checkbox"]) {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--muted);
+  }
+
+  .form-card button[aria-pressed="true"],
+  .candidate-card button[aria-pressed="true"] {
+    background: #315c4b;
+    color: #fff;
+  }
+
+  .page-title,
+  .metric-amount {
+    color: var(--foreground);
+    text-shadow: none;
+  }
+
+  .metric-arrow {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .notice-card {
+    background: linear-gradient(105deg, #322a1b, #25251f);
+  }
+
+  .account-orb {
+    border-color: rgba(194, 154, 97, 0.3);
+    background: linear-gradient(145deg, #26332d, #17211d);
+  }
+
+  .nav-dock {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(23, 33, 29, 0.94);
+  }
+
+  .secondary-button {
+    border-color: var(--line);
+    background: var(--surface);
+    color: var(--foreground);
+  }
+}
+
+/* ローディング中のスケルトン表示 */
+.skeleton {
+  border-radius: 12px;
+  background: rgba(38, 51, 44, 0.08);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: rgba(255, 255, 255, 0.07);
+  }
+}
