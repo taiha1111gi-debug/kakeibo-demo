@@ -10,14 +10,14 @@ describe("デモ用サンプルメール", () => {
     expect(new Set(SAMPLE_MAILS.map((mail) => mail.id)).size).toBe(SAMPLE_MAILS.length);
   });
 
-  it("全通が解析でき、計6件の候補になる（1通は利用2件を含む）", async () => {
+  it("全通が解析でき、1通＝1候補の計5件になる", async () => {
     const results = await Promise.all(SAMPLE_MAILS.map((mail) =>
       parseEmail(mail.bodyText, { sourceType: "gmail_api", externalMessageId: mail.id }),
     ));
     const unparsed = results.filter((result) => result.candidates.length === 0);
     expect(unparsed).toHaveLength(0);
     const candidates = results.flatMap((result) => result.candidates);
-    expect(candidates).toHaveLength(6);
+    expect(candidates).toHaveLength(5);
     for (const candidate of candidates) {
       expect(candidate.provider).toBe("smbc");
       expect(candidate.amount).toBeGreaterThan(0);
