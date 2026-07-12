@@ -92,17 +92,6 @@ const buildSampleMails = (): SampleMail[] => [
 
 本メールはカードご利用の承認照会に基づく通知です。`,
   },
-  {
-    // 利用通知ではないお知らせメール。解析不可としてカウントされる例
-    id: "sample-mail-6",
-    bodyText: `デモ ユーザー 様
-
-三井住友カードからのお知らせです。
-夏のポイントアップのご案内をお届けします。
-対象期間中のご利用でポイントが最大5倍になります。
-
-詳細は会員サイトよりご確認ください。`,
-  },
 ];
 
 export const SAMPLE_MAILS: SampleMail[] = buildSampleMails();

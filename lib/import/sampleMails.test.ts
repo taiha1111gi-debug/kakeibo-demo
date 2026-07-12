@@ -5,17 +5,17 @@ import { parseEmail } from "@/lib/import/parseEmail";
 // デモ取込画面が読むサンプルメールが、本番と同じパーサーで
 // 意図どおり解析できることを固定する（サンプルとパーサーの乖離防止）。
 describe("デモ用サンプルメール", () => {
-  it("6通あり、メールIDが一意", () => {
-    expect(SAMPLE_MAILS).toHaveLength(6);
+  it("5通あり、メールIDが一意", () => {
+    expect(SAMPLE_MAILS).toHaveLength(5);
     expect(new Set(SAMPLE_MAILS.map((mail) => mail.id)).size).toBe(SAMPLE_MAILS.length);
   });
 
-  it("お知らせメール1通を除いてすべて解析でき、計6件の候補になる", async () => {
+  it("全通が解析でき、計6件の候補になる（1通は利用2件を含む）", async () => {
     const results = await Promise.all(SAMPLE_MAILS.map((mail) =>
       parseEmail(mail.bodyText, { sourceType: "gmail_api", externalMessageId: mail.id }),
     ));
     const unparsed = results.filter((result) => result.candidates.length === 0);
-    expect(unparsed).toHaveLength(1);
+    expect(unparsed).toHaveLength(0);
     const candidates = results.flatMap((result) => result.candidates);
     expect(candidates).toHaveLength(6);
     for (const candidate of candidates) {
