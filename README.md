@@ -1,8 +1,6 @@
 # Mellow 家計簿（公開デモ）
 
-<!-- Publicリポジトリ作成後にリポジトリ名を合わせて有効化
-![CI](https://github.com/taiha1111gi-debug/<repo-name>/actions/workflows/ci.yml/badge.svg)
--->
+![CI](https://github.com/taiha1111gi-debug/kakeibo-demo/actions/workflows/ci.yml/badge.svg)
 
 Gmailのカード利用通知を取得し、確認後に支出として登録できる個人用家計簿PWA「Mellow 家計簿」の**公開デモ版**です。
 
