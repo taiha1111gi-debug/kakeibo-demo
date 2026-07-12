@@ -14,15 +14,8 @@ import type { Category, PaymentMethod, Transaction } from "@/lib/types";
 
 const dataErrorMessage = (error: unknown) => {
   if (error instanceof Error) return error.message;
-  if (error && typeof error === "object") {
-    const value = error as { code?: string; message?: string };
-    if (value.code === "42703" && value.message?.includes("expense_type")) {
-      return "Supabaseの追加SQLが未適用です。20260703_add_expense_type.sqlを実行してから再読み込みしてください。";
-    }
-    if (value.code === "42703" && (value.message?.includes("is_system") || value.message?.includes("code"))) {
-      return "Supabaseの追加SQLが未適用です。20260709_add_category_code.sqlを実行してから再読み込みしてください。";
-    }
-    if (value.message) return value.message;
+  if (error && typeof error === "object" && (error as { message?: string }).message) {
+    return (error as { message: string }).message;
   }
   return "データの取得に失敗しました。";
 };

@@ -35,7 +35,7 @@ export const fromDateTimeLocalValue = (value: string) =>
 // --- 締め時刻（1日の切り替え時刻）---
 // ユーザー設定で0〜6時（JST）を選べる。0なら通常どおり0時、6なら朝6時までの
 // 支出を前日として扱う。データ本体(occurred_at)は変更せず、表示と集計の解釈だけを変える。
-// 値の出所はSupabaseのuser_settings（DayBoundaryProviderが起動時に適用する）。
+// 値の出所はユーザー設定（DayBoundaryProviderが起動時に適用する）。
 //
 // 値は購読可能な小さなストアとして持つ：
 // - Reactへは useSyncExternalStore（DayBoundaryProvider）経由で伝わる
@@ -63,7 +63,7 @@ export const subscribeDayBoundaryHour = (listener: () => void) => {
 };
 
 // --- 月キー（JST基準の "YYYY-MM"）ユーティリティ ---
-// occurred_atはSupabaseからUTC表記で返るため、slice(0, 7)ではJSTの月境界
+// occurred_atはUTC表記で保持されるため、slice(0, 7)ではJSTの月境界
 // （1日の0時〜9時）がひと月ずれる。月・日単位の判定は必ずここを通す。
 
 const jstDateKeyFormat = new Intl.DateTimeFormat("sv-SE", {

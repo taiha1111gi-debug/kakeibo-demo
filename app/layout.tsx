@@ -8,16 +8,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Mellow 家計簿",
+    default: "Mellow 家計簿（デモ）",
     template: "%s | Mellow",
   },
-  description: "支出をそっと自動でまとめる、自分専用の家計簿",
-  // 個人利用アプリのため検索エンジンに載せない。robots.txtのDisallowは
-  // クローラがこのnoindexを読めなくなり逆効果なので追加しないこと。
-  robots: {
-    index: false,
-    follow: false,
-  },
+  description: "支出をそっと自動でまとめる家計簿の公開デモ。データはすべて架空で、ブラウザ内にのみ保存されます。",
+  // 公開デモは見つけてもらうためのものなので、本番と違いnoindexは付けない
   applicationName: "Mellow 家計簿",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
@@ -49,6 +44,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <div className="app-shell">
           <ServiceWorkerRegistration />
           <OfflineBanner />
+          <p className="mx-auto mt-2 w-fit max-w-full rounded-full bg-[var(--brand-soft)] px-3 py-1 text-center text-[10px] font-bold text-[var(--brand)]">
+            公開デモ：データはすべて架空・保存はこのブラウザ内のみ
+          </p>
           <DayBoundaryProvider>{children}</DayBoundaryProvider>
           <BottomNav />
         </div>

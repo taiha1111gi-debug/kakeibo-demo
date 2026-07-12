@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Mellow 家計簿",
+    name: "Mellow 家計簿（デモ）",
     short_name: "Mellow",
-    description: "支出をそっと自動でまとめる、自分専用の家計簿",
+    description: "支出をそっと自動でまとめる家計簿の公開デモ",
     start_url: "/",
     scope: "/",
     display: "standalone",

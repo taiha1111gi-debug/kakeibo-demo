@@ -1,15 +1,15 @@
 // ビルド後に実行し、クライアントへ配信されるJS/CSSのgzip合計を計測する。
 // 依存追加などで静かに肥大化するのを検知するのが目的で、
 // SOFT超過はCIに警告注釈だけ、HARD超過はCIを失敗させる。
-// 閾値の根拠：導入時点の実測に対して SOFT=約+20%、HARD=約+40%。
+// 閾値の根拠：デモ版の導入時点実測250KBに対して SOFT=約+20%、HARD=約+40%。
 // 正当な機能追加で超えた場合は、このファイルの閾値を理由付きで更新する。
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { gzipSync } from "node:zlib";
 
 const STATIC_DIR = join(process.cwd(), ".next", "static");
-const SOFT_LIMIT_KB = 380;
-const HARD_LIMIT_KB = 450;
+const SOFT_LIMIT_KB = 300;
+const HARD_LIMIT_KB = 350;
 
 const collectAssets = (dir) => {
   const files = [];
